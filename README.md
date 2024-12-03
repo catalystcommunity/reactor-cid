@@ -17,3 +17,18 @@ We might add some additional things later like a webhook-to-job API and a log ca
 ## Status
 
 Just beginning and playing. Join the [Catalyst Community Discord](https://discord.gg/sfNb9xRjPn) to chat about it.
+
+If you want to try it, the goal is you have to copy `external-root.sh` to somewhere that has git, curl, and docker (curl is unused at the moment) and then you can setup your system however you want to. For instance, if I were running from some other CICD system, in that system I would do:
+
+```bash
+# runnerenv.sh is the host that sets up the job, used by external-root.sh
+scp [-p port] runnerenv.sh jobenv.sh user@host
+# remember that external-root.sh is already on that box, though you could copy it if you wanted
+ssh user@host external-root.sh
+```
+
+Any other way you want to get `runnerenv.sh` and `jobenv.sh` to the host, you do you.
+
+The env.sh files are just `VARNAME=VALUE` shell variables that configure the job. So your runnerenv configures the host, and the jobenv configures anything you need in the job itself. The job is just going to call a bash script of your choosing in that container running the job.
+
+Simple, easy, hopefully very effective.
