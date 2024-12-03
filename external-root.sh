@@ -24,6 +24,7 @@ REACTORCIDE_CLEAN_WORKSPACE="${REACTORCIDE_CLEAN_WORKSPACE:-./reactorcidetemp}"
 REACTORCIDE_CORE_REPO_URL="${REACTORCIDE_CORE_REPO_URL:-git@github.com:catalystcommunity/reactorcide.git}"
 REACTORCIDE_CORE_REF="{REACTORCIDE_CORE_REF:-main}"
 REACTORCIDE_JOB_REF="{REACTORCIDE_JOB_REF:-main}"
+REACTORCIDE_REPONAME="{REACTORCIDE_REPONAME:-jobrepo}"
 
 
 # colors
@@ -113,14 +114,14 @@ external_run(){
     cd reactorcide
     git checkout ${REACTORCIDE_CORE_REF}
     cd -
-    git clone ${REACTORCIDE_JOB_REPO_URL} jobrepo
+    git clone ${REACTORCIDE_JOB_REPO_URL} ${REACTORCIDE_REPONAME}
     cd jobrepo
     git checkout ${REACTORCIDE_JOB_REF}
     cd -
 
     docker run -it --rm \
         --volume ./reactorcide:/reactorcide \
-        --volume ./jobrepo:/workspace/jobrepo \
+        --volume ./jobrepo:/workspace/${REACTORCIDE_REPONAME} \
         --volume ./scratch:/workspace/scratch \
         --volume ${REACTORCIDE_JOBENVFILE}:/workspace/jobenv.sh \
         ${REACTORCIDE_WORKFLOW_CONTAINER_URL} \

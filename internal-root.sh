@@ -19,10 +19,14 @@ REACTORCIDE_JOB_VARS="${1}"
 # overrides, but will have defaults where possible. Non-default required items
 # are at the top. They are not checked until after sourcing overrides from
 # the ${REACTORCIDE_RUNNERENVFILE} var
+# This should also be from the repo root, so path/to/script.ext and NOT start with /
 REACTORCIDE_JOB_ENTRYPOINT="NOTSET"
 
 # Defaulted vals below
 REACTORCIDE_ROOT="${REACTORCIDE_ROOT:-/reactorcide}"
+# note the lack of the trailing slash
+REACTORCIDE_REPONAME="${REACTORCIDE_REPONAME:-jobrepo}"
+REACTORCIDE_REPOROOT="SET_LATER"
 
 # colors
 TERMCOLOR_RED=$'\e[0;31m'
@@ -56,6 +60,8 @@ internal_run(){
     set -a
     source ${REACTORCIDE_JOB_VARS}
     set +a
+    # The repo name is configurable, workspace is not, so we can use it for more than the repo, like scratch space
+    REACTORCIDE_REPOROOT="/workspace/${REACTORCIDE_REPONAME}"
 
     if [ "${REACTORCIDE_JOB_ENTRYPOINT}" == "NOTSET" ]; then
         echo "No REACTORCIDE_JOB_ENTRYPOINT set, exiting."
@@ -69,7 +75,7 @@ internal_run(){
 
     # Everything in theory is working, so now just run the job
 
-    ${REACTORCIDE_JOB_ENTRYPOINT}
+    ${REACTORCIDE_REPOROOT}/${REACTORCIDE_JOB_ENTRYPOINT}
 }
 
 # This should be last in the script, all other functions are named beforehand.
