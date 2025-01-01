@@ -6,6 +6,8 @@
 
 set -e
 
+set -x
+
 THISSCRIPT=$(basename $0)
 
 SCRIPT_ROOT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
@@ -22,9 +24,9 @@ REACTORCIDE_JOBENVFILE="${REACTORCIDE_JOBENVFILE:-jobenv.sh}"
 REACTORCIDE_WORKFLOW_CONTAINER_URL="${REACTORCIDE_WORKFLOW_CONTAINER_URL:-quay.io/catalystcommunity/catalyst-runner-image}"
 REACTORCIDE_CLEAN_WORKSPACE="${REACTORCIDE_CLEAN_WORKSPACE:-./reactorcidetemp}"
 REACTORCIDE_CORE_REPO_URL="${REACTORCIDE_CORE_REPO_URL:-git@github.com:catalystcommunity/reactorcide.git}"
-REACTORCIDE_CORE_REF="{REACTORCIDE_CORE_REF:-main}"
-REACTORCIDE_JOB_REF="{REACTORCIDE_JOB_REF:-main}"
-REACTORCIDE_REPONAME="{REACTORCIDE_REPONAME:-jobrepo}"
+REACTORCIDE_CORE_REF="${REACTORCIDE_CORE_REF:-main}"
+REACTORCIDE_JOB_REF="${REACTORCIDE_JOB_REF:-main}"
+REACTORCIDE_REPONAME="${REACTORCIDE_REPONAME:-jobrepo}"
 
 
 # colors
@@ -77,12 +79,12 @@ external_run(){
     external_cmd_check "curl"
     external_cmd_check "docker"
 
-    if [ ! -f "${REACTORCIDE_RUNNERENVFILE}" ]; then
-        echo "${REACTORCIDE_RUNNERENVFILE} is unavailable"
+    if [ ! -f "./${REACTORCIDE_RUNNERENVFILE}" ]; then
+        echo "./${REACTORCIDE_RUNNERENVFILE} is unavailable"
         MISSING_DEPS="true"
     fi
-    if [ ! -f "${REACTORCIDE_JOBENVFILE}"]; then
-        echo "${REACTORCIDE_JOBENVFILE} is unavailable"
+    if [ ! -f "./${REACTORCIDE_JOBENVFILE}" ]; then
+        echo "./${REACTORCIDE_JOBENVFILE} is unavailable"
         MISSING_DEPS="true"
     fi
 
@@ -93,7 +95,7 @@ external_run(){
 
     # Dependencies are there, source env vars and make sure requireds are set
     set -a
-    source ${REACTORCIDE_RUNNERENVFILE}
+    source ./${REACTORCIDE_RUNNERENVFILE}
     set +a
 
     external_check_required_env
@@ -107,7 +109,7 @@ external_run(){
     # Yes, dangerous, we know, trust your devs or run this in a docker container somehow
     rm -rf ${REACTORCIDE_CLEAN_WORKSPACE}
     mkdir -p ${REACTORCIDE_CLEAN_WORKSPACE}/scratch
-    cp ${REACTORCIDE_JOBENVFILE} ${REACTORCIDE_CLEAN_WORKSPACE}/
+    cp ./${REACTORCIDE_JOBENVFILE} ${REACTORCIDE_CLEAN_WORKSPACE}/
     cd ${REACTORCIDE_CLEAN_WORKSPACE}
 
     git clone ${REACTORCIDE_CORE_REPO_URL} reactorcide
@@ -123,9 +125,9 @@ external_run(){
         --volume ./reactorcide:/reactorcide \
         --volume ./jobrepo:/workspace/${REACTORCIDE_REPONAME} \
         --volume ./scratch:/workspace/scratch \
-        --volume ${REACTORCIDE_JOBENVFILE}:/workspace/jobenv.sh \
-        ${REACTORCIDE_WORKFLOW_CONTAINER_URL} \
+        --volume ./${REACTORCIDE_JOBENVFILE}:/workspace/jobenv.sh \
         --name reactorcide-job \
+        ${REACTORCIDE_WORKFLOW_CONTAINER_URL} \
         /reactorcide/internal-root.sh /workspace/jobenv.sh
 
 }
