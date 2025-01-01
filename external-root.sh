@@ -129,6 +129,7 @@ external_run(){
         --volume ./jobrepo:/workspace/${REACTORCIDE_REPONAME} \
         --volume ./scratch:/workspace/scratch \
         --volume ./${REACTORCIDE_JOBENVFILE}:/workspace/jobenv.sh \
+        -e REACTORCIDE_DEBUG="${REACTORCIDE_DEBUG}" \
         --name reactorcide-job \
         ${REACTORCIDE_WORKFLOW_CONTAINER_URL} \
         /reactorcide/internal-root.sh /workspace/jobenv.sh
