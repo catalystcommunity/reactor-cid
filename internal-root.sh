@@ -9,6 +9,11 @@
 # If you are used to a Makefile, this is where you do the work instead
 set -e
 
+# Useful for seeing where things might be failing, but very noisy and possibly leaking values
+if [ "${REACTORCIDE_DEBUG}" == "true" ]; then
+    set -x
+fi
+
 THISSCRIPT=$(basename $0)
 
 SCRIPT_ROOT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
@@ -68,7 +73,7 @@ internal_run(){
         exit 1
     fi
 
-    if [ ! -f "${REACTORCIDE_JOB_ENTRYPOINT}" ]; then
+    if [ ! -f "${REACTORCIDE_REPOROOT}/${REACTORCIDE_JOB_ENTRYPOINT}" ]; then
         echo "${REACTORCIDE_JOB_ENTRYPOINT} is unavailable"
         exit 1
     fi
