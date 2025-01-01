@@ -68,7 +68,7 @@ internal_run(){
         exit 1
     fi
 
-    if [ ! -f "${REACTORCIDE_JOB_ENTRYPOINT}"]; then
+    if [ ! -f "${REACTORCIDE_JOB_ENTRYPOINT}" ]; then
         echo "${REACTORCIDE_JOB_ENTRYPOINT} is unavailable"
         exit 1
     fi
