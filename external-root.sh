@@ -6,7 +6,10 @@
 
 set -e
 
-set -x
+# Useful for seeing where things might be failing, but very noisy and possibly leaking values
+if [ "${REACTORCIDE_DEBUG}" == "true" ]; then
+    set -x
+fi
 
 THISSCRIPT=$(basename $0)
 
