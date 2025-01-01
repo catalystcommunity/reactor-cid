@@ -124,7 +124,7 @@ external_run(){
     git checkout ${REACTORCIDE_JOB_REF}
     cd -
 
-    docker run -it --rm \
+    docker run --rm \
         --volume ./reactorcide:/reactorcide \
         --volume ./jobrepo:/workspace/${REACTORCIDE_REPONAME} \
         --volume ./scratch:/workspace/scratch \
