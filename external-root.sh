@@ -19,27 +19,27 @@ SCRIPT_ROOT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && p
 # overrides, but will have defaults where possible. Non-default required items
 # are at the top. They are not checked until after sourcing overrides from
 # the ${REACTORCIDE_RUNNERENVFILE} var
-REACTORCIDE_JOB_REPO_URL="NOTSET"
+export REACTORCIDE_JOB_REPO_URL="NOTSET"
 
 # Defaulted vals below
-REACTORCIDE_RUNNERENVFILE="${REACTORCIDE_RUNNERENVFILE:-runnerenv.sh}"
-REACTORCIDE_JOBENVFILE="${REACTORCIDE_JOBENVFILE:-jobenv.sh}"
-REACTORCIDE_WORKFLOW_CONTAINER_URL="${REACTORCIDE_WORKFLOW_CONTAINER_URL:-quay.io/catalystcommunity/catalyst-runner-image}"
-REACTORCIDE_CLEAN_WORKSPACE="${REACTORCIDE_CLEAN_WORKSPACE:-./reactorcidetemp}"
-REACTORCIDE_CORE_REPO_URL="${REACTORCIDE_CORE_REPO_URL:-git@github.com:catalystcommunity/reactorcide.git}"
-REACTORCIDE_CORE_REF="${REACTORCIDE_CORE_REF:-main}"
-REACTORCIDE_JOB_REF="${REACTORCIDE_JOB_REF:-main}"
-REACTORCIDE_REPONAME="${REACTORCIDE_REPONAME:-jobrepo}"
+export REACTORCIDE_RUNNERENVFILE="${REACTORCIDE_RUNNERENVFILE:-runnerenv.sh}"
+export REACTORCIDE_JOBENVFILE="${REACTORCIDE_JOBENVFILE:-jobenv.sh}"
+export REACTORCIDE_WORKFLOW_CONTAINER_URL="${REACTORCIDE_WORKFLOW_CONTAINER_URL:-quay.io/catalystcommunity/catalyst-runner-image}"
+export REACTORCIDE_CLEAN_WORKSPACE="${REACTORCIDE_CLEAN_WORKSPACE:-./reactorcidetemp}"
+export REACTORCIDE_CORE_REPO_URL="${REACTORCIDE_CORE_REPO_URL:-git@github.com:catalystcommunity/reactorcide.git}"
+export REACTORCIDE_CORE_REF="${REACTORCIDE_CORE_REF:-main}"
+export REACTORCIDE_JOB_REF="${REACTORCIDE_JOB_REF:-main}"
+export REACTORCIDE_REPONAME="${REACTORCIDE_REPONAME:-jobrepo}"
 
 
 # colors
-TERMCOLOR_RED=$'\e[0;31m'
-TERMCOLOR_GREEN=$'\e[0;32m'
-TERMCOLOR_ORANGE=$'\e[0;33m'
-TERMCOLOR_YELLOW=$'\e[1;33m'
-TERMCOLOR_BLUE=$'\e[1;33m'
-TERMCOLOR_CYAN=$'\e[0;36m'
-TERMCOLOR_NONE=$'\e[0m'
+export TERMCOLOR_RED=$'\e[0;31m'
+export TERMCOLOR_GREEN=$'\e[0;32m'
+export TERMCOLOR_ORANGE=$'\e[0;33m'
+export TERMCOLOR_YELLOW=$'\e[1;33m'
+export TERMCOLOR_BLUE=$'\e[1;33m'
+export TERMCOLOR_CYAN=$'\e[0;36m'
+export TERMCOLOR_NONE=$'\e[0m'
 
 # script internal vars
 MISSING_DEPS="false"

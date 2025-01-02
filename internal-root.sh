@@ -18,29 +18,29 @@ THISSCRIPT=$(basename $0)
 
 SCRIPT_ROOT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-REACTORCIDE_JOB_VARS="${1}"
+export REACTORCIDE_JOB_VARS="${1}"
 
 # Config defaults, this section assumes the env you're running in can have
 # overrides, but will have defaults where possible. Non-default required items
 # are at the top. They are not checked until after sourcing overrides from
 # the ${REACTORCIDE_RUNNERENVFILE} var
 # This should also be from the repo root, so path/to/script.ext and NOT start with /
-REACTORCIDE_JOB_ENTRYPOINT="NOTSET"
+export REACTORCIDE_JOB_ENTRYPOINT="NOTSET"
 
 # Defaulted vals below
-REACTORCIDE_ROOT="${REACTORCIDE_ROOT:-/reactorcide}"
+export REACTORCIDE_ROOT="${REACTORCIDE_ROOT:-/reactorcide}"
 # note the lack of the trailing slash
-REACTORCIDE_REPONAME="${REACTORCIDE_REPONAME:-jobrepo}"
+export REACTORCIDE_REPONAME="${REACTORCIDE_REPONAME:-jobrepo}"
 REACTORCIDE_REPOROOT="SET_LATER"
 
 # colors
-TERMCOLOR_RED=$'\e[0;31m'
-TERMCOLOR_GREEN=$'\e[0;32m'
-TERMCOLOR_ORANGE=$'\e[0;33m'
-TERMCOLOR_YELLOW=$'\e[1;33m'
-TERMCOLOR_BLUE=$'\e[1;33m'
-TERMCOLOR_CYAN=$'\e[0;36m'
-TERMCOLOR_NONE=$'\e[0m'
+export TERMCOLOR_RED=$'\e[0;31m'
+export TERMCOLOR_GREEN=$'\e[0;32m'
+export TERMCOLOR_ORANGE=$'\e[0;33m'
+export TERMCOLOR_YELLOW=$'\e[1;33m'
+export TERMCOLOR_BLUE=$'\e[1;33m'
+export TERMCOLOR_CYAN=$'\e[0;36m'
+export TERMCOLOR_NONE=$'\e[0m'
 
 # script internal vars
 MISSING_DEPS="false"
@@ -66,7 +66,7 @@ internal_run(){
     source ${REACTORCIDE_JOB_VARS}
     set +a
     # The repo name is configurable, workspace is not, so we can use it for more than the repo, like scratch space
-    REACTORCIDE_REPOROOT="/workspace/${REACTORCIDE_REPONAME}"
+    export REACTORCIDE_REPOROOT="/workspace/${REACTORCIDE_REPONAME}"
 
     if [ "${REACTORCIDE_JOB_ENTRYPOINT}" == "NOTSET" ]; then
         echo "No REACTORCIDE_JOB_ENTRYPOINT set, exiting."
